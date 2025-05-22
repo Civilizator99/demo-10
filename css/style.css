@@ -38,10 +38,38 @@
   list-style-type: none;
 }
 
+.center {
+  text-align: center;
+}
+
+.center button {
+  margin-top: 10px;
+  margin-bottom: 10px ;
+  cursor: pointer;
+  padding: 5px;
+  width: fit-content;
+  background: linear-gradient(90deg, #000000, #fab5eb, #000000);
+  font-weight: bolder;
+  border-radius: 45%;
+  width: 50px;
+}
+
+.center button, button a {
+  color: red;
+}
+
+.center button:hover {
+  background: linear-gradient(90deg, #fab5eb, #000000, #fab5eb);
+}
+
+.center button:hover a {
+  color: blueviolet;
+}
+
 body {
     background-image: url(../img/kaliLinux.png);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-size: 100%;
+    background-repeat: repeat-y;
 }
 
 .div1 {
@@ -61,11 +89,34 @@ body {
 }
 
 .box1 {
-    background-color: var(--opacity-2);
+    background-color: var(--opacity-4);
     margin: 0 auto;
     width: 90%;
     height: 20%;
     text-align: center;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: 3px outset black;
+}
+.box1 img {
+  width: 100%;
 }
 
+.box1 h3, p{
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.7rem;
+  font-weight: bolder;
+}
+
+.box1 a{
+  color: greenyellow;
+}
+
+.box1 a:hover{
+  color: violet;
+}
+
+.box1 iframe {
+  padding: 20px;
+}

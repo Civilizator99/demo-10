@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>BlogMadWormmon</title>
+</head>
+<body>
+<header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./01.html">CyberSecurity</a></li>
+                <li><a href="../hardwareSoldering/01.html">HardwareSoldering</a></li>
+                <li><a href="../jpFanTranslation/01.html">JpFanTranslations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="center">
+        <form style="display: inline" action="../../index.html" method="get">
+          <button class="button"><a href="../../index.html">Home</a></button>
+          <button><a href="./01.html">1</a></button>
+          <button><a href="./02.html">2</a></button>
+        </form>
+    </div>
+
+    <div class="box1">
+        <h3>Los seis estados de puerto reconocidos por Nmap</h3>
+        <p>abierto (open) Una aplicación está aceptando activamente conexiones TCP, datagramas UDP o asociaciones SCTP en este puerto. Encontrar estos puertos suele ser el objetivo principal del escaneo de puertos. Las personas preocupadas por la seguridad saben que cada puerto abierto es una vía de ataque. Los atacantes y los pentesters quieren explotar los puertos abiertos, mientras que los administradores intentan cerrarlos o protegerlos con cortafuegos sin impedir el acceso legítimo. Los puertos abiertos también son interesantes para escaneos no relacionados con seguridad porque muestran servicios disponibles para usar en la red.</p>
+        
+        <p>cerrado (closed) Un puerto cerrado es accesible (recibe y responde a los paquetes de sondeo de Nmap), pero no hay ninguna aplicación escuchando en él. Pueden ser útiles para mostrar que un host está activo en una dirección IP (descubrimiento de hosts o escaneo ping) y como parte de la detección del sistema operativo. Debido a que los puertos cerrados son alcanzables, puede valer la pena escanearlos más tarde en caso de que alguno se abra. Los administradores pueden considerar bloquear estos puertos con un cortafuegos, lo que haría que aparecieran en el estado filtrado, que se describe a continuación.</p>
+
+        <p>filtrado (filtered) Nmap no puede determinar si el puerto está abierto porque el filtrado de paquetes impide que sus sondas lleguen al puerto. El filtrado puede provenir de un dispositivo dedicado de cortafuegos, reglas de router o software de cortafuegos basado en el host. Estos puertos frustran a los atacantes porque proporcionan muy poca información. A veces responden con mensajes de error ICMP, como tipo 3 código 13 (destino inalcanzable: comunicación administrativamente prohibida), pero es mucho más común que los filtros simplemente descarten las sondas sin responder. Esto obliga a Nmap a reintentar varias veces por si la sonda fue descartada debido a congestión de red y no por filtrado. Esto ralentiza el escaneo de manera significativa.</p>
+
+        <p>no filtrado (unfiltered) El estado no filtrado significa que un puerto es accesible, pero Nmap no puede determinar si está abierto o cerrado. Solo el escaneo ACK, que se usa para mapear reglas de cortafuegos, clasifica puertos en este estado. Escanear puertos no filtrados con otros tipos de escaneo, como Window scan, SYN scan o FIN scan, puede ayudar a resolver si el puerto está abierto.</p>
+
+        <p>abierto|filtrado (open|filtered) Nmap coloca los puertos en este estado cuando no puede determinar si un puerto está abierto o filtrado. Esto ocurre en tipos de escaneo en los que los puertos abiertos no responden. La falta de respuesta también podría significar que un filtro de paquetes descartó la sonda o cualquier respuesta que pudiera haber generado. Por lo tanto, Nmap no sabe con certeza si el puerto está abierto o está siendo filtrado. Los escaneos UDP, protocolo IP, FIN, NULL y Xmas clasifican los puertos de esta manera.</p>
+
+        <p>cerrado|filtrado (closed|filtered) Este estado se usa cuando Nmap no puede determinar si un puerto está cerrado o filtrado. Solo se utiliza para el escaneo IP ID idle.</p>
+    </div>
+
+    <div class="box1">
+        <h3>Escaneo de puertos</h3>
+        <h3>-sS (Escaneo TCP SYN)</h3>
+        <p>En esta sección voy a resumir el escaneo de puertos</p>
+        <p>El escaneo SYN es la opción de escaneo predeterminada y más popular por buenas razones. Puede realizarse rápidamente, escaneando miles de puertos por segundo en una red rápida que no esté limitada por cortafuegos restrictivos. También es relativamente poco intrusivo y sigiloso, ya que nunca completa las conexiones TCP. El escaneo SYN funciona contra cualquier pila TCP compatible, en lugar de depender de idiosincrasias de plataformas específicas como hacen los escaneos FIN/NULL/Xmas, Maimon y idle de Nmap. Además, permite una diferenciación clara y fiable entre los estados abierto, cerrado y filtrado.</p>
+        <p>Esta técnica a menudo se denomina escaneo "semiabierto" porque no se abre una conexión TCP completa. Se envía un paquete SYN, como si fueras a abrir una conexión real, y luego se espera una respuesta. Un SYN/ACK indica que el puerto está escuchando (abierto), mientras que un RST (reset) indica que no hay un servicio escuchando en ese puerto. Si no se recibe respuesta después de varios reintentos, el puerto se marca como filtrado. El puerto también se marca como filtrado si se recibe un error ICMP de destino inalcanzable (tipo 3, códigos 0, 1, 2, 3, 9, 10 o 13). El puerto también se considera abierto si se recibe un paquete SYN (sin la bandera ACK) en respuesta. Esto puede deberse a una característica TCP extremadamente rara conocida como apertura simultánea o conexión con apretón de manos dividido <a href="https://nmap.org/misc/split-handshake.pdf" target="_blank">ver</a></p>
+    </div>
+
+    <div class="box1">
+        <h3>Uso de -sS</h3>
+        <p>Este sí que hay que usarlo con sudo, de lo contrario no se puede usar.</p>
+        <p>Nos dice que hay un host levantado, y que además tiene varios puertos abiertos y que además nos dice que servicio podría ser (no nos lo garantíza, se basa en los puertos que usan de base ciertos servicios mas comunes), para comprobar si está up un host, lo hace mediante ARP, pero en vez de hacer un three way handshake lo que hace es dejar el three way handshake a medias, es decir inicia el SYN, le devuelve el ACK, y en lugar de completar el three way handshake hacemos un RST (terminamos la conexión) porque una vez recibimos lo que queremos no necesitamos hacer más ruido.</p>
+    </div>
+    
+    <div class="box1">
+        <img src="../../img/nmap5.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <h3></h3>
+        <p></p>
+    </div>
+
+    <div class="box1">
+        <h3></h3>
+        <p></p>
+        <p></p>
+    </div>
+
+</body>
+</html>
