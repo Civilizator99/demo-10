@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/barbilla carmesí.jpeg">
     <link rel="stylesheet" href="../../css/style.css">
     <title>BlogMadWormmon</title>
 </head>
@@ -60,14 +61,24 @@
     </div>
 
     <div class="box1">
-        <h3></h3>
-        <p></p>
+        <h3>Podemos filtrar un rango de ips por si solo queremos hacer varias maquinas</h3>
+        <p>cuando vayamos a realizar una búsqueda, en la IP a targetear añadimos 192.168.x.105-109 (en caso que queramos que vaya de la 105 a la 109 el escaneo) de modo que: <span style="color: red;">sudo nmap -sS 192.168.105-109</span></p>
     </div>
 
     <div class="box1">
-        <h3></h3>
-        <p></p>
-        <p></p>
+        <h3>Añadir más información y exportar de manera legible</h3>
+        <p>Podemos añadir más información de output con el argumento <span style="color: red;">-v (verbose)</span>, y también podemos pedirle el motivo por el cual el puerto está abierto o cerrado con el flag <span style="color: red;">--reason</span>, y también podemos pedirle que lo exporte en un archivo xml con el argumento <span style="color: red;">-oX </span> y el flag <span style="color: red;">--stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span> para que nos lo vuelque el xml formateado en esta hoja de estilo (se encuentra descargada en local en nmap). Hay que darle privilegios de administrador al archivo xml para que lo podamos ver. el comando sería: <span style="color: red;">sudo nmap -v -sS --reason -oX resultados1.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl" 192.168.x.x</span></p>
+    </div>
+
+    <div class="box1">
+        <img src="../../img/nmap6.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <h3>Comprobar el archivo exportado en xml</h3>
+        <p>Para poder ver el archivo que hemos volcado en xml para o bien adjuntar a un informe o para poder verlo de manera legible, elevamos privilegios con <span style="color: red;">chmod 777 resultados1.xml</span></p>
+        <p>y ejecutamos el comando para abrir el archivero xml: <span style="color: red;">firefox resultados1.xml</span></p>
+        <img src="../../img/nmap7.jpg" alt="">
     </div>
 
 </body>
