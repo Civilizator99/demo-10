@@ -31,7 +31,45 @@
 
     <div class="box1">
         <h3>Escaneo de sistema operativo</h3>
-        <p></p>
+        <p>Para el escaneo de sistema operativo <span class="spanR">usamos -O</span>, con este comando <span class="spanR">escaneamos los puertos del host, nos dice cual esta abierto y qué servicio podría correr (basándose en el archivo de nmap)</span> como se puede observa en la siguiente captura</p>
+        <img src="../../img/nmap13.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <p>Observemos qué información nos da en nuestra máquina windows</p>
+        <img src="../../img/nmap14.jpg" alt="">
+        <p>Ahí podemos ver que es un <span class="spanR">windows 7</span>, <span class="spanR">los puertos</span> y como dato extra, si nos fijamos al final nos dice de dónde saca el archivo donde tiene escrito los servicios que corren por default en puertos, <span class="spanR">Read data files from: /usr/share/nmap</span>.</p>
+        <p>nota, en linux nos dio varias posibilidades, en windows nos dijo que era 1, se acercó pero no acertó, es un 2k8 R2</p>
+    </div>
+
+    <div class="box1">
+        <h3>Introduccion a los Scripts</h3>
+        <p>nmap ya trae scripts por default, se encuentran en: <span class="spanR">/usr/share/nmap/scripts</span> navegamos hacia esa carpeta y ejecutamos: <span class="spanR">ls</span> para ver todos los scripts que tenemos a nuestro uso, recomiendo abrirlo en una terminal diferente y tenerla en segundo plano como referencia cuando se necesite</p>
+        <img src="../../img/nmap15.jpg" alt="">
+        <p>para usarlo, debemos ejecutar un comando que queramos y añadirle <span class="spanR">--script=nombreDeScript</span></p>
+    </div>
+
+
+    <div class="box1">
+        <h3>Protocolo SMB</h3>
+        <p>El protocolo SMB es un protocolo que se lleva usando desde windows 2000 aprox, es un sistema que ya nace con fallos, y con cada actualizacion van surgiendo más, este protocolo sirve para compartir archivos entre equipos como carpetas compartidas, usuarios, etc, y va a correr en el puerto 445, podemos sacar información de ahí.</p>
+        <p>navegamos de nuevo a <span class="spanR">/usr/share/nmap/scripts</span> y hacemos un <span class="spanR">ls smb*</span> para listar todos los scripts que gasten smb</p>
+        <img src="../../img/nmap16.jpg" alt="">
+        <p>probemos un script como el de smb-os-discovery en nuestra máquina windows para comprobar si nos da el sistema operativo correcto en comparación al método anterior: <span class="spanR">sudo nmap -v -sS --script=smb-os-discovery 192.168.x.x</span></p>
+        <img src="../../img/nmap17.jpg" alt="">
+        <p>Ahí se puede ver que en efecto, el sistema es un <span class="spanR">Windows Server 2008 R2 Standard 7601 Pack 1</span> a diferencia del método anterior que se acercó ya que dijo que era un Windows 7 pero aquí podemos ver un poco mas a fondo, en detalle y sobretodo con <span class="spanR">mucha precisión</span></p>
+        <p>Nota: no tienen por qué funcionar siempre, es posible que mediante el protocolo SMB estén bien protegidas y no podamos obtener la información</p>
+    </div>
+
+    <div class="box1">
+        <h3>Protocolo SNMP</h3>
+        <p>El protocolo SNMP es un protocolo de red que nos sirve para gestionar/obtener datos de dispositivos de red como routers o switchs, como de servidores. Este protocolo corre en el <span class="spanR">puerto 161</span></p>
+        <p>Usemos nuevamente scripts pero esta vez busquemos scripts para SNMP</p>
+        <img src="../../img/nmap18.jpg" alt="">
+        <p>El puerto SNMP en la mayoría de ocasiones está mal configurado en servidores y nos permite obtener mucha información, hagamos un ejemplo</p>
+        <p><span class="spanR">sudo nmap -v -sU --script=snmp-win32-software 192.168.x.x</span></p>
+        <img src="../../img/nmap19.jpg" alt="">
+        <p>Este tomó mucho tiempo, 500 segundos como se puede ver en la imágen, eso es por que escanee todo, a veces es mejor escanear un puerto concreto con <span class="spanR">-p 161</span> o si queremos varios <span class="spanR">-p 161,21</span> o si queremos un rango con <span class="spanR">-p 161-165</span></p>
     </div>
 
     <footer><p>2025 &copy;</p> <p>MadWormmon</p></footer>
