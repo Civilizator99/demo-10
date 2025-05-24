@@ -120,3 +120,14 @@ body {
 .box1 iframe {
   padding: 20px;
 }
+
+.spanR{
+  color: red;
+}
+
+footer {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: var(--opacity-4);
+  align-content: center;
+}

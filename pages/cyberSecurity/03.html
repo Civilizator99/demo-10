@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/barbilla carmesí.jpeg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>BlogMadWormmon</title>
+</head>
+<body>
+<header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./01.html">CyberSecurity</a></li>
+                <li><a href="../hardwareSoldering/01.html">HardwareSoldering</a></li>
+                <li><a href="../jpFanTranslation/01.html">JpFanTranslations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="center">
+        <form style="display: inline" action="../../index.html" method="get">
+          <button class="button"><a href="../../index.html">Home</a></button>
+          <button><a href="./01.html">1</a></button>
+          <button><a href="./02.html">2</a></button>
+          <button><a href="./03.html">3</a></button>
+          <button><a href="./04.html">4</a></button>
+        </form>
+    </div>
+
+    <div class="box1">
+        <h3>Otros métodos</h3>
+        <h3>-sT</h3>
+        
+        <p>Este método hace el three way handshake completo, dependiendo la situacion se puede usar uno u otro, -sS suele ser mejor por que hace menos ruido. Un caso en el que podría usarse -sT es que en algunas ocasiones detectan el three way handshake cancelado, lo que levanta alarmas, entonces aquí usaríamos -sT</p>
+
+        <h3>-sU</h3>
+
+        <p>El parámetro -sU sirve para hacer el escaneo mediante UDP, intenta ver si hay servicios utilizando protocolo UDP.</p>
+
+        <p><img src="../../img/nmap8.jpg" alt=""></p>
+
+        <p>En la captura se puede ver como en la parte de nmap el escaneo fue realizado mediante udp, el puerto, y el servicio que según un fichero que tiene nmap con los servicios que corren por default en ciertos puertos, dicho archivo suele situarse en <span class="spanR">/usr/share/nmap</span> y si abrimos el archivo <span class="spanR">nmap-service</span> podemos verlo</p>
+
+        <p>En la parte de wireshar podemos ver como en la ICMP nos da destination unreachable por que el puerto está cerrado</p>
+    </div>
+
+    <div class="box1">
+        <h3>Descubrimiento de servicios</h3>
+        <h3>Hasta ahora todos los escaneos que hemos echo no nos dicen qué servicios corren, ya que se basan en el fichero mencionado previamente, así que si lo que buscamos es saber qué servicio está usando y qué versión, usamos el siguiente comando</h3>
+        <h3>-sV</h3>
+        <p>Usamos sudo nmap -sV 192.168.x.x -p 21</p>
+        <p><img src="../../img/nmap9.jpg" alt=""></p>
+        <p>aquí se puede ver un poco como interactúa con la máquina por la parte de wireshark. En la parte de nmap nos dice que hay un host levantado en esa IP, y que tiene un servicio abierto en el puerto que escaneamos, en este caso el 21/tcp, <span class="spanR">servicio FTP, versión: ProFTPD 1.3.5</span></p>
+        <p>Con dicha información ya podemos buscar si existen <span class="spanR">vulnerabilidades o exploits</span> en diferentes fuentes públicas.</p>
+        <p>También nos dice que el sistema operativo es <span class="spanR">Unix</span>, pero podemos obtener de otras maneras más información sobre el OS.</p>
+    </div>
+
+    <div class="box1">
+        <h3>Prueba para exportar</h3>
+        <p>Usemos -sV para exportar y un rango de ips para escanear mis dos máquinas virtuales: <span class="spanR">sudo nmap -sV -v --reason 192.168.x.x-x -oX servicios.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span></p>
+        <p>Ten en cuenta que esta prueba es un escaneo profundo de todos los puertos de los rangos de IP que especifíques, por lo que, <span class="spanR">asegúrate de hacerlo en un entorno cerrado y controlado</span>, en mi caso lo hago con 2 máquinas metasploitable, una ubuntu y una windows, para que podamos observar también como ver los fallos.</p>
+        <img src="../../img/nmap10.jpg" alt="">
+    </div>
+    
+    <div class="box1">
+        <p>Si observamos wireshark, podemos ver cómo por ejemplo he filtrado SSH para ver cómo conseguimos la versión de SSH que está corriendo, <span class="spanR">en realidad nuestra máquina recibe un paquete con el servicio como se puede ver en la parte señalada</span>, de esa manera nmap nos lo vuelca</p>
+    </div>
+
+    <div class="box1">
+        <h3>Miramos el archivo exportado</h3>
+        <p>de nuevo, elevamos permisos con <span class="spanR">sudo chmod777 servicios.xml</span> y lo abrimos con <span class="spanR">firefox servicios.xml</span></p>
+        <img src="../../img/nmap11.jpg" alt="">
+        <p>Observamos el resultado volcado, en mi caso, la ip .128 corresponde a mi <span class="spanR">metasploitable windows, como se puede ver si miramos los servicios.</span></p>
+    </div>
+
+    <div class="box1">
+        <img src="../../img/nmap12.jpg" alt="">
+        <p>Aquí tenemos el escaneo de la máquina ubuntu, la .131, la cual también al <span class="spanR">leer la info extra o la versión ya podemos ver que es un linux</span></p>
+    </div>
+
+    <footer><p>2025 &copy;</p> <p>MadWormmon</p></footer>
+</body>
+</html>
