@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/barbilla carmesí.jpeg">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>BlogMadWormmon</title>
+</head>
+<body>
+<header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="./01.html">CyberSecurity</a></li>
+                <li><a href="../hardwareSoldering/01.html">HardwareSoldering</a></li>
+                <li><a href="../jpFanTranslation/01.html">JpFanTranslations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="center">
+        <form style="display: inline" action="../../index.html" method="get">
+          <button class="button"><a href="../../index.html">Home</a></button>
+          <button><a href="./01.html">1</a></button>
+          <button><a href="./02.html">2</a></button>
+          <button><a href="./03.html">3</a></button>
+          <button><a href="./04.html">4</a></button>
+          <button><a href="./05.html">5</a></button>
+        </form>
+    </div>
+
+    <div class="box1">
+        <h3>Escaneo de vulnerabilidades con script vuln</h3>
+        <p>Si usamos el script <span class="spanR">--script=vuln</span> obtendremos información detallada sobre vulnerabilidades en los servicios del dispositivo escaneado</p>
+        <img src="../../img/nmap20.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <h3>Prueba a escanear vulnerabilidades y exportarlas en xml</h3>
+        <p>Voy a escanear ambas máquinas virtuales y exportarlas, usemos el comando: <span class="spanR">sudo nmap -sS -v --reason --script=vuln 192.168.74.xx,xx -oX vulnerabilidades.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span></p>
+        <p>Veamos primero los resultados para la máquina Windows</p>
+        <img src="../../img/nmap21.jpg" alt="">
+        <img src="../../img/nmap22.jpg" alt="">
+        <img src="../../img/nmap23.jpg" alt="">
+        <img src="../../img/nmap24.jpg" alt="">
+    </div>
+
+    <div class="box1">
+        <p>Resultados de la máquina Ubuntu</p>
+        <img src="../../img/nmap25.jpg" alt="">
+        <img src="../../img/nmap26.jpg" alt="">
+        <img src="../../img/nmap27.jpg" alt="">
+        <img src="../../img/nmap28.jpg" alt="">
+        <img src="../../img/nmap29.jpg" alt="">
+        <img src="../../img/nmap30.jpg" alt="">
+        <img src="../../img/nmap31.jpg" alt="">
+        <p>Como se puede ver, hay muchos fallos de seguridad explotables, y incluso te dan el código CVE</p>
+        <p>probemos acceder por ejemplo desde nuestra máquina principal Kali a la máquina Ubuntu en <span class="spanR">192.168.x.x:x/admincontrol/login.php</span>, para acceder, se tiene que especificar también el puerto, en este caso es el 631 por lo que después de la ip ponemos :631 de modo que: <span class="spanR">http://192.168.x.x:631/admincontrol/login.php</span></p>
+        <img src="../../img/nmap32.jpg" alt="">
+        <p>Como podemos comprobar, se puede acceder a un admincontrol</p>
+    </div>
+
+    <div class="box1">
+        <h3>Hagamos otro escaneo solo en Ubuntu</h3>
+        <p>Usaré nuevamente: <span class="spanR">sudo nmap -sS -v --reason --script=vuln 192.168.74.x -oX vulnerabilidadesUbuntuTCP.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span></p>
+        <p>Como siempre, elevamos permisos del xml con <span class="spanR">sudo chmod777 vulnerabilidadesUbuntuTCP.xml</span></p>
+        <img src="../../img/nmap33.jpg" alt="">
+        <img src="../../img/nmap34.jpg" alt="">
+        <img src="../../img/nmap35.jpg" alt="">
+        <p>Como se puede ver, esta vez da más información, eso se debe a que <span class="spanR">tenía puesto en el escaneo anterior el firewall de Ubuntu</span>, pero lo he quitado para que se aprecie la importancia del firewall.</p>
+    </div>
+
+    <div class="box1">
+        <p>Nos fijaremos en concreto en esta: <span class="spanR">irc-unrealircd-backdoor: Looks like trojaned version of unrealircd. See <a href="http://seclists.org/fulldisclosure/2010/Jun/277" target="_blank">http://seclists.org/fulldisclosure/2010/Jun/277</a></span></p>
+    </div>
+
+    <footer><p>2025 &copy;</p> <p>MadWormmon</p></footer>
+</body>
+</html>
